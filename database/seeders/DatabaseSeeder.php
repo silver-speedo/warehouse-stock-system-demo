@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         Warehouse::factory(50)->create();
 
-        Product::factory(150000)->create()->each(function (Product $product) {
+        Product::factory(1000)->create()->each(function (Product $product) {
             $warehouse = Warehouse::query()->inRandomOrder()->first()->uuid;
             $quantity = rand(0, 20);
             $threshold = rand(0, $quantity);
@@ -45,26 +45,26 @@ class DatabaseSeeder extends Seeder
             }
         });
 
-        Order::factory(2000)->create()->each(function (Order $order) {
-            $quantity = rand(1, 10);
-            $product = Product::query()->inRandomOrder()->first();
-
-            $order->products()->syncWithPivotValues($product->uuid, [
-                'quantity' => $quantity,
-                'price' => $product->price,
-                'total' => $quantity * $product->price,
-            ]);
-
-            if (rand(0, 1) === 1) {
-                $quantity = rand(1, 10);
-                $product = Product::query()->whereNot('uuid', $product->id)->inRandomOrder()->first();
-
-                $order->products()->syncWithPivotValues($product->uuid, [
-                    'quantity' => $quantity,
-                    'price' => $product->price,
-                    'total' => $quantity * $product->price,
-                ]);
-            }
-        });
+//        Order::factory(2000)->create()->each(function (Order $order) {
+//            $quantity = rand(1, 10);
+//            $product = Product::query()->inRandomOrder()->first();
+//
+//            $order->products()->syncWithPivotValues($product->uuid, [
+//                'quantity' => $quantity,
+//                'price' => $product->price,
+//                'total' => $quantity * $product->price,
+//            ]);
+//
+//            if (rand(0, 1) === 1) {
+//                $quantity = rand(1, 10);
+//                $product = Product::query()->whereNot('uuid', $product->id)->inRandomOrder()->first();
+//
+//                $order->products()->syncWithPivotValues($product->uuid, [
+//                    'quantity' => $quantity,
+//                    'price' => $product->price,
+//                    'total' => $quantity * $product->price,
+//                ]);
+//            }
+//        });
     }
 }

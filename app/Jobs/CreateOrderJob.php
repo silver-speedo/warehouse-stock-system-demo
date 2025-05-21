@@ -40,7 +40,7 @@ class CreateOrderJob implements ShouldQueue
             $product = Product::query()->findOrFail($this->productUuid);
             $total = $product->price * $this->quantity;
 
-            $stock->deductFromBestWarehouse($this->productUuid, $this->quantity);
+            $warehouseId = $stock->deductFromBestWarehouse($this->productUuid, $this->quantity);
 
             $order = $orders->create([
                 'order_status' => OrderStatus::PLACED->value,
@@ -48,6 +48,7 @@ class CreateOrderJob implements ShouldQueue
             ]);
 
             $orders->addItem($order, $product->uuid, [
+                'warehouse_uuid' => $warehouseId,
                 'quantity' => $this->quantity,
                 'price' => $product->price,
                 'total' => $total,

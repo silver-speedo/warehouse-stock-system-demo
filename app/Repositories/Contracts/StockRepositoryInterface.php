@@ -18,5 +18,5 @@ interface StockRepositoryInterface
 
     public function getWarehouseBreakdown(string $productUuid): Collection;
 
-    public function deductFromBestWarehouse(string $productUuid, int $quantity): void;
+    public function deductFromBestWarehouse(string $productUuid, int $quantity): string;
 }

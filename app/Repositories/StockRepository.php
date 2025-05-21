@@ -71,7 +71,7 @@ class StockRepository implements StockRepositoryInterface
     /**
      * @throws Exception
      */
-    public function deductFromBestWarehouse(string $productUuid, int $quantity): void
+    public function deductFromBestWarehouse(string $productUuid, int $quantity): string
     {
         $stocks = Product::query()
             ->find($productUuid)
@@ -84,7 +84,7 @@ class StockRepository implements StockRepositoryInterface
                 $stock->pivot->quantity -= $quantity;
                 $stock->pivot->save();
 
-                return;
+                return $stock->uuid;
             }
         }
 
