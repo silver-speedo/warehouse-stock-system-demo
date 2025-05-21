@@ -3,7 +3,6 @@
 namespace App\Enums;
 
 use App\Traits\BackedEnumHelper;
-
 enum OrderStatus: string
 {
     use BackedEnumHelper;

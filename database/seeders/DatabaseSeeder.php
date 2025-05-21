@@ -2,10 +2,7 @@
 
 namespace Database\Seeders;
 
-
 use App\Models\Order;
-use App\Models\Pivots\OrderProduct;
-use App\Models\Pivots\ProductWarehouse;
 use App\Models\Product;
 use App\Models\Warehouse;
 use Illuminate\Database\Seeder;
@@ -17,19 +14,38 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Warehouse::factory(5)->create();
+        Warehouse::factory(50)->create();
 
-        Product::factory(50)->create()->each(function (Product $product) {
+        Product::factory(150000)->create()->each(function (Product $product) {
+            $warehouse = Warehouse::query()->inRandomOrder()->first()->uuid;
+            $quantity = rand(0, 20);
+            $threshold = rand(0, $quantity);
+
             $product->warehouses()->syncWithPivotValues(
-                Warehouse::query()->inRandomOrder()->first()->uuid,
+                $warehouse,
                 [
-                    'quantity' => rand(0, 20),
-                    'threshold' => rand(1, 10),
+                    'quantity' => $quantity,
+                    'threshold' => $threshold,
                 ]
             );
+
+            if (rand(0, 1) === 1) {
+                $warehouse = Warehouse::query()->whereNot('uuid', $warehouse)->inRandomOrder()->first()->uuid;
+                $quantity = rand(0, 20);
+                $threshold = rand(0, $quantity);
+
+                $product->warehouses()->syncWithPivotValues(
+                    $warehouse,
+                    [
+                        'quantity' => $quantity,
+                        'threshold' => $threshold,
+                    ],
+                    false
+                );
+            }
         });
 
-        Order::factory(20)->create()->each(function (Order $order) {
+        Order::factory(2000)->create()->each(function (Order $order) {
             $quantity = rand(1, 10);
             $product = Product::query()->inRandomOrder()->first();
 
@@ -38,6 +54,17 @@ class DatabaseSeeder extends Seeder
                 'price' => $product->price,
                 'total' => $quantity * $product->price,
             ]);
+
+            if (rand(0, 1) === 1) {
+                $quantity = rand(1, 10);
+                $product = Product::query()->whereNot('uuid', $product->id)->inRandomOrder()->first();
+
+                $order->products()->syncWithPivotValues($product->uuid, [
+                    'quantity' => $quantity,
+                    'price' => $product->price,
+                    'total' => $quantity * $product->price,
+                ]);
+            }
         });
     }
 }
