@@ -7,9 +7,11 @@ use Illuminate\Queue\SerializesModels;
 
 class CreateOrderFailed
 {
-    use Dispatchable, SerializesModels;
+    use Dispatchable;
+    use SerializesModels;
 
     public string $message;
+
     /**
      * Create a new event instance.
      */

@@ -29,7 +29,7 @@ class OrderController extends Controller
 
     public function create(CreateOrderRequest $request): JsonResponse
     {
-        CreateOrderJob::dispatchSync($request->input('product_uuid'), $request->input('quantity'));
+        CreateOrderJob::dispatch($request->input('product_uuid'), $request->input('quantity'));
 
         return response()->json([
             'message' => 'Order placed successfully!',

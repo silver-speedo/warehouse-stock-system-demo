@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Warehouse;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends Factory<Warehouse>
@@ -24,9 +25,9 @@ class WarehouseFactory extends Factory
             'address_1' => fake()->streetName(),
             'address_2' => fake()->optional()->streetAddress(),
             'town' => fake()->city(),
-            'county' => null,
+            'county' => fake()->word(),
             'postcode' => fake()->postcode(),
-            'state_code' => null,
+            'state_code' => Str::upper(fake()->randomLetter() . fake()->randomLetter()),
             'country_code' => fake()->countryCode(),
         ];
     }

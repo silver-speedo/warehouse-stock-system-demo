@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 class ProductController extends Controller
 {
     private ProductRepositoryInterface $products;
+
     private StockRepositoryInterface $stocks;
 
     public function __construct(ProductRepositoryInterface $products, StockRepositoryInterface $stocks)

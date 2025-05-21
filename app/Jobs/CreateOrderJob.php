@@ -18,12 +18,13 @@ use Illuminate\Support\Facades\DB;
 
 class CreateOrderJob implements ShouldQueue
 {
-    use Dispatchable,
-        InteractsWithQueue,
-        Queueable,
-        SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     public array $productUuid;
+
     public array $quantity;
 
     public function __construct(array $productUuid, array $quantity)
@@ -72,4 +73,3 @@ class CreateOrderJob implements ShouldQueue
         }
     }
 }
-

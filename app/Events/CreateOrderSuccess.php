@@ -8,9 +8,11 @@ use Illuminate\Queue\SerializesModels;
 
 class CreateOrderSuccess
 {
-    use Dispatchable, SerializesModels;
+    use Dispatchable;
+    use SerializesModels;
 
     public Order $order;
+
     /**
      * Create a new event instance.
      */

@@ -3,8 +3,8 @@
 namespace App\Repositories\Contracts;
 
 use App\Models\Product;
-use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 interface ProductRepositoryInterface
 {

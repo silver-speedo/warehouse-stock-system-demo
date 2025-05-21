@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\WarehouseController;
-use App\Http\Controllers\Api\OrderController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/products', [ProductController::class, 'list']);
 Route::get('/products/index', [ProductController::class, 'index']);
