@@ -23,10 +23,10 @@ class CreateOrderJob implements ShouldQueue
         Queueable,
         SerializesModels;
 
-    public string $productUuid;
-    public int $quantity;
+    public array $productUuid;
+    public array $quantity;
 
-    public function __construct(string $productUuid, int $quantity)
+    public function __construct(array $productUuid, array $quantity)
     {
         $this->productUuid = $productUuid;
         $this->quantity = $quantity;
@@ -37,22 +37,30 @@ class CreateOrderJob implements ShouldQueue
         try {
             DB::beginTransaction();
 
-            $product = Product::query()->findOrFail($this->productUuid);
-            $total = $product->price * $this->quantity;
-
-            $warehouseId = $stock->deductFromBestWarehouse($this->productUuid, $this->quantity);
-
+            $total = 0;
             $order = $orders->create([
                 'order_status' => OrderStatus::PLACED->value,
                 'total' => $total,
             ]);
 
-            $orders->addItem($order, $product->uuid, [
-                'warehouse_uuid' => $warehouseId,
-                'quantity' => $this->quantity,
-                'price' => $product->price,
-                'total' => $total,
-            ]);
+            foreach ($this->productUuid as $id => $uuid) {
+                $product = Product::query()->findOrFail($uuid);
+                $itemTotal = $product->price * $this->quantity[$id];
+
+                $warehouseId = $stock->deductFromBestWarehouse($product->uuid, $this->quantity[$id]);
+
+                $orders->addItem($order, $product->uuid, [
+                    'warehouse_uuid' => $warehouseId,
+                    'quantity' => $this->quantity[$id],
+                    'price' => $product->price,
+                    'total' => $itemTotal,
+                ]);
+
+                $total += $itemTotal;
+            }
+
+            $order->total = $total;
+            $order->save();
 
             DB::commit();
 

@@ -15,8 +15,10 @@ class CreateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_uuid' => ['required', 'exists:products,uuid'],
-            'quantity' => ['required', 'integer', 'min:1'],
+            'product_uuid' => ['required', 'array'],
+            'product_uuid.*' => ['required', 'exists:products,uuid'],
+            'quantity' => ['required', 'array'],
+            'quantity.*' => ['required', 'integer', 'min:1'],
         ];
     }
 }
