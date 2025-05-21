@@ -11,7 +11,7 @@ class ProductRepository implements ProductRepositoryInterface
 {
     public function paginated(): LengthAwarePaginator
     {
-        return Product::query()->fastPaginate(request('page.size', 10));
+        return Product::query()->orderBy('uuid')->fastPaginate(request('page.size', 10));
     }
 
     public function all(): ?Collection

@@ -11,7 +11,7 @@ class OrderRepository implements OrderRepositoryInterface
 {
     public function paginated(): LengthAwarePaginator
     {
-        return Order::query()->fastPaginate(request('page.size', 10));
+        return Order::query()->orderBy('uuid')->fastPaginate(request('page.size', 10));
     }
 
     public function all(): ?Collection

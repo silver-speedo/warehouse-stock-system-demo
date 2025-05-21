@@ -11,7 +11,7 @@ class WarehouseRepository implements WarehouseRepositoryInterface
 {
     public function paginated(): LengthAwarePaginator
     {
-        return Warehouse::query()->fastPaginate(request('page.size', 10));
+        return Warehouse::query()->orderBy('uuid')->fastPaginate(request('page.size', 10));
     }
 
     public function all(): ?Collection
