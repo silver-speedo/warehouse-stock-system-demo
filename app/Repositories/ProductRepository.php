@@ -5,12 +5,18 @@ namespace App\Repositories;
 use App\Models\Product;
 use App\Repositories\Contracts\ProductRepositoryInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class ProductRepository implements ProductRepositoryInterface
 {
-    public function all(): LengthAwarePaginator
+    public function paginated(): LengthAwarePaginator
     {
         return Product::query()->fastPaginate(request('page.size', 10));
+    }
+
+    public function all(): ?Collection
+    {
+        return Product::all();
     }
 
     public function find(string $uuid): ?Product

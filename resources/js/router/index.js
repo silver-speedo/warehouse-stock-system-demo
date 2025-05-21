@@ -1,10 +1,12 @@
-import { createRouter, createWebHistory } from 'vue-router'
-
-import HelloWorld from '../pages/HelloWorld.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import PlaceOrder from '../pages/PlaceOrder.vue';
+import ProductList from '../pages/ProductList.vue';
 
 export default createRouter({
     history: createWebHistory(),
     routes: [
-        { path: '/', component: HelloWorld },
+        { path: '/', redirect: '/order' },
+        { path: '/order', component: PlaceOrder },
+        { path: '/products', component: ProductList },
     ],
-})
+});

@@ -3,11 +3,14 @@
 namespace App\Repositories\Contracts;
 
 use App\Models\Product;
+use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 interface ProductRepositoryInterface
 {
-    public function all(): LengthAwarePaginator;
+    public function paginated(): LengthAwarePaginator;
+
+    public function all(): ?Collection;
 
     public function find(string $uuid): ?Product;
 

@@ -17,9 +17,14 @@ class OrderController extends Controller
         $this->orders = $orders;
     }
 
+    public function index(): JsonResponse
+    {
+        return response()->json($this->orders->all()->pluck('order_status', 'uuid'));
+    }
+
     public function list(): JsonResponse
     {
-        return response()->json($this->orders->all());
+        return response()->json($this->orders->paginated());
     }
 
     public function create(CreateOrderRequest $request): JsonResponse

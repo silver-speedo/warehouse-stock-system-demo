@@ -18,9 +18,14 @@ class ProductController extends Controller
         $this->stocks = $stocks;
     }
 
+    public function index(): JsonResponse
+    {
+        return response()->json($this->products->all()->pluck('title', 'uuid'));
+    }
+
     public function list(): JsonResponse
     {
-        $paginated = $this->products->all();
+        $paginated = $this->products->paginated();
 
         $result = $paginated->getCollection()->map(function ($product) {
             $uuid = $product->uuid;

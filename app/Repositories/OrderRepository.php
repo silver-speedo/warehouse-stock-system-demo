@@ -5,12 +5,18 @@ namespace App\Repositories;
 use App\Models\Order;
 use App\Repositories\Contracts\OrderRepositoryInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class OrderRepository implements OrderRepositoryInterface
 {
-    public function all(): LengthAwarePaginator
+    public function paginated(): LengthAwarePaginator
     {
-        return Order::with('products')->fastPaginate(request('page.size', 10));
+        return Order::query()->fastPaginate(request('page.size', 10));
+    }
+
+    public function all(): ?Collection
+    {
+        return Order::all();
     }
 
     public function find(string $uuid): ?Order

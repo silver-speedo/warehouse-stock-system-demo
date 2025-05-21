@@ -15,8 +15,13 @@ class WarehouseController extends Controller
         $this->warehouses = $warehouses;
     }
 
+    public function index(): JsonResponse
+    {
+        return response()->json($this->warehouses->all()->pluck('name', 'uuid'));
+    }
+
     public function list(): JsonResponse
     {
-        return response()->json($this->warehouses->all());
+        return response()->json($this->warehouses->paginated());
     }
 }

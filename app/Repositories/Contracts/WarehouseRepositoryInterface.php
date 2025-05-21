@@ -4,10 +4,13 @@ namespace App\Repositories\Contracts;
 
 use App\Models\Warehouse;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 interface WarehouseRepositoryInterface
 {
-    public function all(): LengthAwarePaginator;
+    public function paginated(): LengthAwarePaginator;
+
+    public function all(): ?Collection;
 
     public function find(string $uuid): ?Warehouse;
 
