@@ -24,9 +24,9 @@ class OrderRepository implements OrderRepositoryInterface
         return Order::with('products')->find($uuid);
     }
 
-    public function create(array $attributes): Order
+    public function create(array $data): Order
     {
-        return Order::query()->create($attributes);
+        return Order::query()->create($data);
     }
 
     public function update(string $uuid, array $data): bool

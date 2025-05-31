@@ -23,7 +23,7 @@ cp .env.example .env
 ./vendor/bin/sail up -d 
 ./vendor/bin/sail npm i
 ./vendor/bin/sail artisan migrate:fresh && ./vendor/bin/sail artisan db:seed
-./vendor/bin/sail npm run dev
+./vendor/bin/sail npm run dev or ./vendor/bin/sail npm run build (to build assets)
 ```
 
 ### 🧪 Running the Tests

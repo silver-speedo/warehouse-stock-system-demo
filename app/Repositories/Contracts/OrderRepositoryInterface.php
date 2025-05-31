@@ -14,7 +14,7 @@ interface OrderRepositoryInterface
 
     public function find(string $uuid): ?Order;
 
-    public function create(array $attributes): Order;
+    public function create(array $data): Order;
 
     public function update(string $uuid, array $data): bool;
 

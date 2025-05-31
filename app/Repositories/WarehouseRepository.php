@@ -24,9 +24,9 @@ class WarehouseRepository implements WarehouseRepositoryInterface
         return Warehouse::query()->find($uuid);
     }
 
-    public function create(array $attributes): Warehouse
+    public function create(array $data): Warehouse
     {
-        return Warehouse::query()->create($attributes);
+        return Warehouse::query()->create($data);
     }
 
     public function update(string $uuid, array $data): bool

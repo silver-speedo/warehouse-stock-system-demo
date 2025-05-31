@@ -15,9 +15,9 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(ProductRepositoryInterface::class, config('repositories.product'));
-        $this->app->bind(WarehouseRepositoryInterface::class, config('repositories.warehouse'));
-        $this->app->bind(StockRepositoryInterface::class, config('repositories.stock'));
-        $this->app->bind(OrderRepositoryInterface::class, config('repositories.order'));
+        $this->app->singleton(ProductRepositoryInterface::class, config('repositories.product'));
+        $this->app->singleton(WarehouseRepositoryInterface::class, config('repositories.warehouse'));
+        $this->app->singleton(StockRepositoryInterface::class, config('repositories.stock'));
+        $this->app->singleton(OrderRepositoryInterface::class, config('repositories.order'));
     }
 }

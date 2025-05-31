@@ -14,7 +14,7 @@ interface WarehouseRepositoryInterface
 
     public function find(string $uuid): ?Warehouse;
 
-    public function create(array $attributes): Warehouse;
+    public function create(array $data): Warehouse;
 
     public function update(string $uuid, array $data): bool;
 
